@@ -48,12 +48,13 @@ public class AcceptingApplicationsForPaymentTest {
         assertThat(b).isFalse();
     }
 
-//    @Test
-//    public void createNewOrder_OK() {
-//        String statusTest = "83";
-//        String newOrder = acceptingApplicationsForPayment.createNewOrder(orderRepository);
-//        assertThat(newOrder).isEqualTo(statusTest);
-//    }
+    //данный тест создает новую заявку и проверяет по ID
+    @Test
+    public void createNewOrder_OK() {
 
-
+        orderRepository.countOrders();
+        Integer statusTest = orderRepository.countOrders() + 1;
+        String newOrder = acceptingApplicationsForPayment.createNewOrder(orderRepository);
+        assertThat(newOrder).isEqualTo(statusTest.toString());
+    }
 }

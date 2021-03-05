@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Transactional
@@ -15,4 +13,6 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query(value = "UPDATE Order set status = ?2 where id = ?1")
     public void updatingStatus(Integer status, String name);
 
+    @Query(value = "SELECT COUNT (*) FROM Order")
+    public int countOrders();
 }
