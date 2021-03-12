@@ -49,14 +49,13 @@ public class PaymentProcessor {
         //тут происходит оплата и возвращаются платежи с новыми статусами
         //.......
         Map<Integer, String> ordersForPay = forPay.stream().collect(Collectors.toMap(Order::getId, Order::getStatus));
-        ordersForPay.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, str -> str.setValue(randomStatusAssignment())));
-
-        Map<Integer, String> listForStatusChanges = ordersForPay.entrySet().stream().filter(str ->
+        ordersForPay.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, str ->
+                str.setValue(randomStatusAssignment()))).entrySet().stream().filter(str ->
                 str.getValue().equals("проведен") || str.getValue().equals("ошибка")).
                 collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
         // обновление статусов после оплаты а базе
-        for (Map.Entry<Integer, String> pair : listForStatusChanges.entrySet()) {
+        for (Map.Entry<Integer, String> pair : ordersForPay.entrySet()) {
             repository.updatingStatus(pair.getKey(), pair.getValue());
         }
     }

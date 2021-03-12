@@ -17,12 +17,11 @@ public class TicketPaymentApplication implements CommandLineRunner {
         SpringApplication.run(TicketPaymentApplication.class, args);
     }
 
-    private final  OrderRepository repository;
+    private final OrderRepository repository;
 
 
     @Override
     public void run(String... args) throws Exception {
-
         PaymentProcessor paymentProcessor = new PaymentProcessor(repository);
         paymentProcessor.go();
     }
